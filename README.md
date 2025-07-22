@@ -247,3 +247,43 @@ The SIBR interface provides several methods of navigating the scene. By default,
 
 ## Acknowledgement
 Our repo is developed based on [3D Gaussian Splatting](https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/), [PERF](https://github.com/perf-project/PeRF), [idea2img](https://github.com/zyang-ur/Idea2Img) and [StitchDiffusion](https://github.com/littlewhitesea/StitchDiffusion). Many thanks to the authors for opensoucing the codebase.
+
+## Work with this repo on Anarchy's remote GPUs
+### Setup ssh
+1. Get pem keys for `bastion` and `dream-scene` from ShiHan then put them into your `~/.ssh` folder
+2. Create a file called `config` in your `~/.ssh` folder then paste the following:
+```
+Host bastion
+  HostName ec2-98-85-216-95.compute-1.amazonaws.com
+  User ubuntu
+  IdentityFile ~/.ssh/bastion-key.pem
+
+Host dream-scene
+  HostName ip-10-0-138-232.ec2.internal
+  User ubuntu
+  IdentityFile ~/.ssh/dream-scene-key.pem
+  ProxyJump bastion
+```
+3. ssh to the remote GPU instance
+```bash
+ssh dream-scene
+```
+
+### After ssh into `dream-scene` instance
+1. Go to the DreamScene360 repo which should be at the `root`
+```bash
+cd DreamScene360/
+```
+2. Activate conda virtual env
+```bash
+conda activate dreamscene360
+```
+3. Run commands
+```bash
+python train.py -s data/alley_pano -m output/3d_scene
+python render.py -s data/alley_pano -m output/3d_alley_scene  --iteration 9000
+```
+4. (Optional) Use this command to watch the GPU usage in another `ssh` window
+```bash
+watch -n 1 nvidia-smi
+```
