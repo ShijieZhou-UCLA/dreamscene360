@@ -64,7 +64,7 @@ import library.huggingface_util as huggingface_util
 
 # Tokenizer: checkpointから読み込むのではなくあらかじめ提供されているものを使う
 TOKENIZER_PATH = "openai/clip-vit-large-patch14"
-V2_STABLE_DIFFUSION_PATH = "stabilityai/stable-diffusion-2"  # ここからtokenizerだけ使う v2とv2.1はtokenizer仕様は同じ
+V2_STABLE_DIFFUSION_PATH = "sd2-community/stable-diffusion-2"  # ここからtokenizerだけ使う v2とv2.1はtokenizer仕様は同じ
 
 # checkpointファイル名
 EPOCH_STATE_NAME = "{}-{:06d}-state"

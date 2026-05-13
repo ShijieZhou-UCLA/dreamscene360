@@ -133,7 +133,7 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
             perturbation_image, perturbation_rendered_depth= perturbation_render_pkg["render"], perturbation_render_pkg["depth"]
             ### perturbation depth loss
             pred_depth = estimate_depth(perturbation_image)
-            loss_perturbation_depth =   (1 - pearson_corrcoef(rendered_depth.reshape(-1, 1)[:, 0], - gt_depth.reshape(-1, 1)[:, 0]))
+            loss_perturbation_depth = (1 - pearson_corrcoef(perturbation_rendered_depth.reshape(-1, 1)[:, 0], - pred_depth.reshape(-1, 1)[:, 0]))
 
             if torch.isnan(loss_perturbation_depth).sum() == 0:
                 loss += depth_weight * loss_perturbation_depth

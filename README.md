@@ -50,21 +50,28 @@ pip install submodules/simple-knn
 ```
 
 # Checkpoints
-1. From project home directory, create folder: **pre_checkpoints**
-```
-mkdir pre_checkpoints
-```
+From the project home directory, run the following commands to download all required checkpoints:
 
-2. Download required pretrained model `omnidata_dpt_depth_v2.ckpt` from this [dropbox link](https://www.dropbox.com/scl/fo/348s01x0trt0yxb934cwe/h?rlkey=a96g2incso7g53evzamzo0j0y&dl=0) into **pre_checkpoints**. (Thanks to [PERF](https://github.com/perf-project/PeRF/tree/master/pre_checkpoints) for providing the models)
+```shell
+mkdir -p pre_checkpoints
 
-3. Download required pretrained models for text2pano:
-```
+# Download Omnidata depth checkpoint.
+# Thanks to PERF for providing the model:
+# https://github.com/perf-project/PeRF/tree/master/pre_checkpoints
+tmp_dir="$(mktemp -d)"
+wget -O "$tmp_dir/pre_checkpoints.zip" "https://www.dropbox.com/scl/fo/348s01x0trt0yxb934cwe/h?rlkey=a96g2incso7g53evzamzo0j0y&dl=1"
+unzip -o "$tmp_dir/pre_checkpoints.zip" -d "$tmp_dir/pre_checkpoints" || test -f "$tmp_dir/pre_checkpoints/omnidata_dpt_depth_v2.ckpt"
+find "$tmp_dir/pre_checkpoints" -name "omnidata_dpt_depth_v2.ckpt" -exec cp {} pre_checkpoints/ \;
+test -f pre_checkpoints/omnidata_dpt_depth_v2.ckpt
+rm -rf "$tmp_dir"
+
+# Download required pretrained models for text2pano.
 cd stitch_diffusion/pretrained_model
-wget https://huggingface.co/stabilityai/stable-diffusion-2-1-base/resolve/main/v2-1_512-ema-pruned.safetensors -O stable-diffusion-2-1-base.safetensors
+wget https://huggingface.co/sd2-community/stable-diffusion-2-1-base/resolve/main/v2-1_512-ema-pruned.safetensors -O stable-diffusion-2-1-base.safetensors
 cd ../vae
 wget https://huggingface.co/stabilityai/sd-vae-ft-mse-original/resolve/main/vae-ft-mse-840000-ema-pruned.ckpt -O stablediffusion.vae.pt
 cd ..
-python download_lora.py
+wget --no-check-certificate "https://drive.google.com/uc?export=download&id=1MiaG8v0ZmkTwwrzIEFtVoBj-Jjqi_5lz" -O lora.safetensors
 cd ..
 ```
 

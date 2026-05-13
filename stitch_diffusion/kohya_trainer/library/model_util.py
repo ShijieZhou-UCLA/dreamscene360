@@ -37,7 +37,7 @@ V2_UNET_PARAMS_CONTEXT_DIM = 1024
 
 # Diffusersの設定を読み込むための参照モデル
 DIFFUSERS_REF_MODEL_ID_V1 = "runwayml/stable-diffusion-v1-5"
-DIFFUSERS_REF_MODEL_ID_V2 = "stabilityai/stable-diffusion-2-1"
+DIFFUSERS_REF_MODEL_ID_V2 = "sd2-community/stable-diffusion-2-1"
 
 
 # region StableDiffusion->Diffusersの変換コード
